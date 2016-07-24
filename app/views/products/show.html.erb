@@ -1,0 +1,71 @@
+<p id="notice"><%= notice %></p>
+
+<div class="ui container">
+  <a class="ui labeled icon button" href="<%= products_path %>">
+    <i class="up arrow icon"></i>
+    List Products
+  </a>
+  <a class="ui basic icon button" href="<%= edit_product_path(@product) %>">
+    <i class="edit icon"></i>
+    Edit
+  </a>
+</div>
+
+<div class="ui hidden divider"></div>
+
+<div class="ui text container">
+  <h1 class="ui dividing header">Product</h1>
+</div>
+
+<div class="ui text container">
+  <p>
+    <strong>Name:</strong>  <%= @product.name -%></br>
+  </p>
+  <p>
+    <strong>Description:</strong>
+    </br>
+    <%= @product.description -%>
+  </p>
+  <p>
+    <strong>Sku:</strong> <%= @product.sku -%></br>
+  </p>
+
+  <p>
+    <strong>Product Images:</strong>
+    <div class="ui four column doubling cards container">
+      <% if !@product.product_images.nil? -%>
+        <% @product.product_images.each do |product_image| -%>
+          <div class="ui card">
+            <div class="image">
+              <%= image_tag product_image.image_file.url(:thumbnail) %>
+            </div>
+            <div class="extra">
+              <%= link_to product_image.name, product_image %>
+            </div>
+          </div>
+        <% end -%>
+      <% end -%>
+    </div>
+  </p>
+
+  
+    <p>
+    <strong>Tags:</strong>
+    <% if !@product.tags.nil? -%>
+      <% @product.tags.each do |tags| -%>
+        <%= link_to tags.name, tags %>
+      <% end -%>
+    <% end -%>
+    </br>
+  </p>
+
+    <p>
+    <strong>Related products:</strong>
+    <% if !@product.relateds.nil? -%>
+      <% @product.relateds.each do |relateds| -%>
+        <%= link_to relateds.name, relateds %>
+      <% end -%>
+    <% end -%>
+    </br>
+      </p>
+</div>

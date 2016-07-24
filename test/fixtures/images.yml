@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyString
+  ingested_path: MyString
+  normalized_name: MyString
+  product: one
+  other_versions: one
+
+two:
+  name: MyString
+  description: MyString
+  ingested_path: MyString
+  normalized_name: MyString
+  product: two
+  other_versions: two

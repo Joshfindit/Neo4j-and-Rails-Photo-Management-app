@@ -1,0 +1,74 @@
+<div class="ui text container">
+  <div class="ui form">
+    <%= form_for(@image) do |f| %>
+      <% if @image.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@image.errors.count, "error") %> prohibited this image from being saved:</h2>
+          <ul>
+            <% @image.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+            <div class="field">
+              <%= f.label :name %><br>
+              <%= f.text_field :name %>
+            </div>
+
+            <div class="field">
+              <%= f.label "Image File" %><br>
+              <%= f.file_field :image_file %>
+            </div>
+          
+            <div class="field">
+              <%= f.label :description %><br>
+              <%= f.text_field :description %>
+            </div>
+          
+            <div class="field">
+              <%= f.label :ingested_path %><br>
+              <%= f.text_field :ingested_path %>
+            </div>
+         
+            <div class="field">
+              <%= f.label :product_id %><br>
+                
+              <% if @image.product %>
+                <%= f.collection_select(:product, Product.all.sort { |a,b| a.name <=> b.name }, :id, :name, options = {:prompt => "Please Select an Item", :selected => @image.product.id}, html_options = {:multiple => false, :class=>"search"}) %>
+              <% else %>
+                <%= f.collection_select(:product, Product.all.sort { |a,b| a.name <=> b.name }, :id, :name, options = {:prompt => "Please Select an Item"}, html_options = {:multiple => false, :class=>"search"}) %>
+              <% end %>
+            </div>
+
+         
+            <div class="field">
+              <%= f.label :other_versions_id %><br>
+              
+              <%= f.collection_select(:other_versions, Image.all.sort { |a,b| a.name <=> b.name }, :id, :name, options = {:prompt => "Please Select an Item", :selected => @image.other_versions.map(&:id)}, html_options = {:multiple => true, :class=>"search"}) %>
+            </div>
+
+
+      <div class="actions">
+        <%= f.submit html_options = {:class=>"ui button"}%>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+$('.search')
+  .dropdown()
+;
+</script>
+
+<script>
+$('.ui.form')
+  .form({
+    fields: {
+      image_name     : 'empty',
+    }
+  })
+;
+</script>

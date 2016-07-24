@@ -1,0 +1,129 @@
+- The drop downs don’t work site-wide (the javascript needs to be debugged) # Resolved
+- Images can’t choose their products. Doesn’t seem to pass the if statement # Resolved
+- _form template needs to handle 'if the connection _is_ nil, show the drop-down and don't pre-select one' #Resolved
+- Not sure on the syntax of checking to make sure there are things to select in the drop-down when editing an entry (.nil? shows that it's not nil when there are no connections. Possibly related to the [""]?) #.empty? is the correct method
+
+- Change "Product.relateds" to "Product.related_products" with type: :RELATED_PRODUCT
+
+
+- How to transliterate the current images from "img_239847.jpg" to "SKU4625_thumbnail.jpg", "SKU4625_full.jpg", and so-on
+	- Import the CSV (Note: the CSV must be re-saved with UTF-8 encoding to prevent `ArgumentError: invalid byte sequence in UTF-8`)
+		CSV::Converters[:blank_to_nil] = lambda do |field|
+		  field && field.empty? ? nil : field
+		end
+		body = File.read(CSV_file_name)
+		csv = CSV.new(body, :headers => true, :header_converters => :symbol, :converters => [:all, :blank_to_nil])
+		hashmap = csv.to_a.map {|row| row.to_hash }
+		hashmap.each do |product|
+			thisImage = Image.new
+			thisProduct.variables = product.variables
+			thisProduct.save
+		end
+
+	- Connect a product name to the image
+	- name the image with the product name (with counter from the image #?) and save to a new folder
+	- Export some sort of ID ([:catalogid]? [:id]?) that connects the new name to it's product
+
+- Import the CSV as Products
+	- (Note: the CSV must be re-saved with UTF-8 encoding to prevent `ArgumentError: invalid byte sequence in UTF-8`)
+		CSV::Converters[:blank_to_nil] = lambda do |field|
+		  field && field.empty? ? nil : field
+		end
+		body = File.read(CSV_file_name)
+		csv = CSV.new(body, :headers => true, :header_converters => :symbol, :converters => [:all, :blank_to_nil])
+		hashmap = csv.to_a.map {|row| row.to_hash }
+		hashmap.each do |product|
+			thisProduct = Product.new
+			thisProduct.variables = product.variables
+				# 3DCart URl: http://shop.hookingrugs.com/Notecard--Raise-to-the-Sky_p_74.html
+				# {:catalogid=>74, :id=>224, :name=>"Notecard - Raise to the Sky", :categories=>"Gift Ideas/Cards", :mfgid=>nil, :manufacturer=>nil, :distributor=>nil, :cost=>0, :price=>4, :price2=>0, :price3=>0, :saleprice=>0, :onsale=>0, :stock=>0, :stock_alert=>0, :display_stock=>nil, :weight=>0, :minimumorder=>1, :maximumorder=>0, :date_created=>"12/16/2014", :description=>"<p>\tNew Notecard.Envelope included, measures 5.25 by 8.25\". Sold individually</p>", :extended_description=>"<p>\tNew Notecard.Envelope included, measures 5.25 by 8.25\". Sold individually</p>", :keywords=>nil, :sorting=>0, :thumbnail=>"/assets/images/RaiseToTheSky zen cart.jpg", :image1=>"/assets/images/RaiseToTheSky zen cart.jpg", :image2=>nil, :image3=>nil, :image4=>nil, :realmedia=>nil, :related=>nil, :accessories=>nil, :shipcost=>0, :imagecaption1=>nil, :imagecaption2=>nil, :imagecaption3=>nil, :imagecaption4=>nil, :title=>"Notecard - Raise to the Sky", :metatags=>nil, :displaytext=>nil, :eproduct_password=>nil, :eproduct_random=>0, :eproduct_expire=>0, :eproduct_path=>nil, :eproduct_serial=>0, :eproduct_instructions=>nil, :homespecial=>0, :categoryspecial=>0, :hide=>0, :free_shipping=>0, :nontax=>0, :notforsale=>0, :giftcertificate=>0, :userid=>nil, :last_update=>"12/10/2014", :extra_field_1=>nil, :extra_field_2=>nil, :extra_field_3=>nil, :extra_field_4=>nil, :extra_field_5=>nil, :extra_field_6=>nil, :extra_field_7=>nil, :extra_field_8=>nil, :extra_field_9=>nil, :extra_field_10=>nil, :extra_field_11=>nil, :extra_field_12=>nil, :extra_field_13=>nil, :usecatoptions=>0, :qtyoptions=>nil, :price_1=>0, :price_2=>0, :price_3=>0, :price_4=>0, :price_5=>0, :price_6=>0, :price_7=>0, :price_8=>0, :price_9=>0, :price_10=>0, :hide_1=>0, :hide_2=>0, :hide_3=>0, :hide_4=>0, :hide_5=>0, :hide_6=>0, :hide_7=>0, :hide_8=>0, :hide_9=>0, :hide_10=>0, :minorderpkg=>0, :listing_displaytype=>-1, :show_out_stock=>-1, :pricing_groupopt=>0, :qtydiscount_opt=>0, :loginlevel=>-1, :redirectto=>nil, :accessgroup=>nil, :self_ship=>0, :tax_code=>nil, :eproduct_reuseserial=>0, :nonsearchable=>0, :instock_message=>nil, :outofstock_message=>nil, :backorder_message=>nil, :height=>0, :width=>0, :depth=>0, :reward_points=>0, :reward_disable=>0, :reward_redeem=>0, :filename=>nil, :fractional_qty=>0, :gtin=>nil},
+
+				{:catalogid=>77, :id=>227, :name=>"Notecard - Squares", :categories=>"Gift Ideas/Cards", :mfgid=>nil, :manufacturer=>nil, :distributor=>nil, :cost=>0, :price=>4, :price2=>0, :price3=>0, :saleprice=>0, :onsale=>0, :stock=>0, :stock_alert=>0, :display_stock=>nil, :weight=>0, :minimumorder=>1, :maximumorder=>0, :date_created=>"12/16/2014", :description=>"<p>\tNew Notecard - detail of one of Deanne&#39;s rugs. Envelope included, measures 5.25 by 8.25\". Sold individually.</p>", :extended_description=>"<p>\tNew Notecard - detail of one of Deanne&#39;s rugs. Envelope included, measures 5.25 by 8.25\". Sold individually.</p>", :keywords=>nil, :sorting=>0, :thumbnail=>"/assets/images/Notecard Squares.jpg", :image1=>"/assets/images/Notecard Squares.jpg", :image2=>nil, :image3=>nil, :image4=>nil, :realmedia=>nil, :related=>nil, :accessories=>nil, :shipcost=>0, :imagecaption1=>nil, :imagecaption2=>nil, :imagecaption3=>nil, :imagecaption4=>nil, :title=>"Notecard - Squares", :metatags=>nil, :displaytext=>nil, :eproduct_password=>nil, :eproduct_random=>0, :eproduct_expire=>0, :eproduct_path=>nil, :eproduct_serial=>0, :eproduct_instructions=>nil, :homespecial=>0, :categoryspecial=>0, :hide=>0, :free_shipping=>0, :nontax=>0, :notforsale=>0, :giftcertificate=>0, :userid=>nil, :last_update=>"12/10/2014", :extra_field_1=>nil, :extra_field_2=>nil, :extra_field_3=>nil, :extra_field_4=>nil, :extra_field_5=>nil, :extra_field_6=>nil, :extra_field_7=>nil, :extra_field_8=>nil, :extra_field_9=>nil, :extra_field_10=>nil, :extra_field_11=>nil, :extra_field_12=>nil, :extra_field_13=>nil, :usecatoptions=>0, :qtyoptions=>nil, :price_1=>0, :price_2=>0, :price_3=>0, :price_4=>0, :price_5=>0, :price_6=>0, :price_7=>0, :price_8=>0, :price_9=>0, :price_10=>0, :hide_1=>0, :hide_2=>0, :hide_3=>0, :hide_4=>0, :hide_5=>0, :hide_6=>0, :hide_7=>0, :hide_8=>0, :hide_9=>0, :hide_10=>0, :minorderpkg=>0, :listing_displaytype=>-1, :show_out_stock=>-1, :pricing_groupopt=>0, :qtydiscount_opt=>0, :loginlevel=>-1, :redirectto=>nil, :accessgroup=>nil, :self_ship=>0, :tax_code=>nil, :eproduct_reuseserial=>0, :nonsearchable=>0, :instock_message=>nil, :outofstock_message=>nil, :backorder_message=>nil, :height=>0, :width=>0, :depth=>0, :reward_points=>0, :reward_disable=>0, :reward_redeem=>0, :filename=>nil, :fractional_qty=>0, :gtin=>nil}
+
+
+			thisProduct.save
+			for each image in image 1,2,3,4
+				if currentImage = Image.find
+				thisProduct.image << # From the rename previously
+		end
+- Add Patterns
+	- A product can be a single pattern
+	- A product can have multiple patterns (As in a compilation)
+	- A Pattern can have a photo of the drawing, the linen, of the rug made, of the process, etc
+	- A Product's images are:
+		- The photo of the cover
+		- A photo of the book or material laid out
+		- The Product's Pattern's photos
+- Change Images so that they can have_many pattern_images and have_many product_images
+
+- Add Categories (aka Store Categories)
+	- Tree, based on the folder/subfolder structure, parsed from the CSV such as "Supplies/Books and DVD's" (Supplies)<-[:CATEGORY_PARENT]-(Books and DVD's) and "Patterns/Patterns-Extra Large" (Patterns)<-[:CATEGORY_PARENT]-(Patterns-Extra Large)<-[:CATEGORY]-(Mermaids)
+
+	$ rails generate scaffold ProductCategory name:string category_parent:references category_child:references products:references
+
+- Products need to be re-worked
+	$ rails generate scaffold Product name:string catalogid:string part_number:string cost:float price1:float price2:float price3:float saleprice:float date_created:string short_description:string extended_description:string eproduct_password:string eproduct_path:string notforsale:boolean weight:integer height:integer width:integer depth:integer eproduct_instructions:string tags:references main_image:references product_images:references categories:references related_products:references
+
+  - Files, not just images (PDFs can have thumbnails, but see http://stackoverflow.com/questions/20920212/generate-thumbnail-from-pdf-in-rails-paperclip on how to do it, plus https://coderwall.com/p/0pbokw/paperclip-with-pdfs for dependencies)
+  - Add Dimensions, separate it from the name
+  - Match the following info (fits better with (3D Cart)[https://support.3dcart.com/knowledgebase/article/View/171/9/whats-in-the-products-information-tab]):
+  	# Typical URL: http://shop.hookingrugs.com/Sexy-Jersey-12-oz-Small-Pieces-in-a-Bag-Pink_p_925.html
+  	title
+  		(How is this different from name? Scanning the first few hundred, there are errors on both sides, but for the most part they seem to show the same info)
+  	catalogid
+  		(3DCart's ID? This is part of the public URL, so cannot be changed)
+  	id
+  		(Referred to as "Part Number". It's shown to the user, and on Invoices. Must be readable. DL5690 for a Downloadable product?)
+  		#ID/Sku
+		"This is your product's unique identification number or store keeping unit (SKU) number. This can be anything you'd like and is used to display the product on orders, invoices and internal records of your store's product line. It can be a product's UPC code, or any number you use to identify your product internally. Up to 40 characters are allowed in this field." (https://support.3dcart.com/knowledgebase/article/View/171/9/whats-in-the-products-information-tab)
+  	name
+  	categories
+  		(See "add categories" above)
+  	cost
+  	price
+  	price2 #Why are there multiple prices?
+  	price3
+  	saleprice
+  	date_created
+  	description (aka short description)
+  	extended_description
+  	keywords (tags)
+  	thumbnail
+  		(aka "Main thumbnail", aka "What's shown in lists")
+  	# 'Is an eProduct' (true/false)?
+  	eproduct_password
+  	eproduct_path
+  	eproduct_instructions
+  	notforsale (This flag means it cannot be sent to a cart when we get around to sending products)
+  	weight (g)
+  	height (mm)
+  	width (mm)
+  	depth (mm)
+
+  	Addtional columns from the CSV that will not be in product, but which are relavant as connected data:
+  	image1
+  	image2
+  	image3
+  	image4
+  	imagecaption1
+  	imagecaption2
+  	imagecaption3
+  	imagecaption4
+
+
+- Add "Image Caption" to the Images
+- Add credits to the Images (Most Image captions in 3DCart are credits)
+	- Needs a Noun and Verb as a property:
+		"Runner hooked by Patty Tyrrell", "Hooked by Denice MacDonald"
+	#- Add People? (Image)<-[:CREDITED, noun = "Runner", verb "hooked"]-(Patty Tyrrell)
+	- (Image)<-[:CREDITED]-("Runner hooked by Patty Tyrrell")
+
+	$ rails generate scaffold Image name:string caption:string notes:string  products:references patterns:references other_versions:references credits:references
+
+- Add Task List
+
+	$ rails generate scaffold TaskList name:string notes:string tasks:references
+	$ rails generate scaffold Task name:string date_started:string date_completed:string notes:string priority:integer tasklist:references patterns:references products:references images:references #Note: date is a string so it can be parsed in to a datetime object
+- Add Credits class
+- Add Geospatial Class # For the Image management part
+- Add TimeTree Class ("Hard-code" to Americas/Halifax timezone - use a global variable everywhere timezone is used) # For the image management part

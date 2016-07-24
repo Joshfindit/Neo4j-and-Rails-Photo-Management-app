@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<div class="ui very padded container ">
+  <h1>Images</h1>
+
+  <table class="ui very basic celled table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Ingested path</th>
+        <th>Product</th>
+        <th>Other versions</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @images.limit(45).each do |image| %>
+        <tr>
+          <td>
+            <%- if !image.name.nil? %>
+              <%= link_to image.name, image %>
+            <%- end %>
+          </td>
+          <td>
+            <%- if !image.description.nil? %>
+              <%= image.description %>
+            <%- end %>
+          </td>
+          <td>
+            <%- if !image.ingested_path.nil? %>
+              <%= image.ingested_path %>
+            <%- end %>
+          </td>
+          <td>
+            <%- if !image.product.nil? %>
+              <%= link_to image.product.name, image.product %>
+            <%- end -%>
+          </td>
+          <td>
+            <%- if !image.other_versions.nil? %>
+              <%- image.other_versions.each do |other_versions| -%>
+                <%= link_to other_versions.name, other_versions %>
+              <%- end -%>
+            <%- end -%>
+          </td>
+          <td><%= link_to 'Show', image %></td>
+          <td><%= link_to 'Edit', edit_image_path(image) %></td>
+          <td><%= link_to 'Destroy', image, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <br>
+
+  <%= link_to 'New Image', new_image_path %>
+</div>

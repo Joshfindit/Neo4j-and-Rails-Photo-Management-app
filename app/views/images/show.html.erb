@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+
+<div class="ui container">
+  <a class="ui labeled icon button" href="<%= images_path %>">
+    <i class="up arrow icon"></i>
+    List Images
+  </a>
+  <a class="ui basic icon button" href="<%= edit_image_path(@image) %>">
+    <i class="edit icon"></i>
+    Edit
+  </a>
+</div>
+
+<div class="ui hidden divider"></div>
+
+<div class="ui text container">
+  <h1 class="ui dividing header">Image</h1>
+</div>
+
+<div class="ui text container">
+  <p>
+    <strong>Name:</strong>
+    <%= @image.name -%>
+  </p>
+  <%= image_tag(@image.image_file.url, :class =>"ui very padded fluid image")  %>
+  <p>
+    <strong>Description:</strong>
+    <%= @image.description -%>
+  </p>
+  <p>
+    <strong>Ingested path:</strong>
+    <%= @image.ingested_path -%>
+  </p>
+  <p>
+    <strong>Product:</strong>
+    <% if !@image.product.nil? -%>
+      <%= link_to @image.product.name, @image.product %>
+    <% end -%>
+  </p>
+  <p>
+    <strong>Other versions:</strong>
+    <% if !@image.other_versions.nil? -%>
+      <% @image.other_versions.each do |other_versions| -%>
+        <%= link_to other_versions.name, other_versions %>
+      <% end -%>
+    <% end -%>
+  </p>
+</div>

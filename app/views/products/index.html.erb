@@ -1,0 +1,61 @@
+<p id="notice"><%= notice %></p>
+
+<div class="ui very padded container ">
+  <h1>Products</h1>
+
+  <table class="ui very basic celled table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Sku</th>
+        <th>Tags</th>
+        <th>Related Products</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @products.limit(45).each do |product| %>
+        <tr>
+          <td>
+            <%- if !product.name.nil? %>
+              <%= link_to product.name, product %>
+            <%- end %>
+          </td>
+          <td>
+            <%- if !product.description.nil? %>
+              <%= product.description %>
+            <%- end %>
+          </td>
+          <td>
+            <%- if !product.sku.nil? %>
+              <%= product.sku %>
+            <%- end %>
+          </td>
+          <td>
+            <%- if !product.tags.nil? %>
+              <%- product.tags.each do |tags| -%>
+                <%= link_to tags.name, tags %>
+              <%- end -%>
+            <%- end -%>
+          </td>
+          <td>
+            <%- if !product.relateds.nil? %>
+              <%- product.relateds.each do |relateds| -%>
+                <%= link_to relateds.name, relateds %>
+              <%- end -%>
+            <%- end -%>
+          </td>
+          <td><%= link_to 'Show', product %></td>
+          <td><%= link_to 'Edit', edit_product_path(product) %></td>
+          <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <br>
+
+  <%= link_to 'New Product', new_product_path %>
+</div>
